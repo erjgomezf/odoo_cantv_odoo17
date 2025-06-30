@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="product_template_form_view_cantv_ext" model="ir.ui.view">
+        <field name="name">product.template.form.view.cantv.ext</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('oe_title')]" position="after">
+                <group>
+                    <field name="is_cantv_asset"/>
+                </group>
+            </xpath>
+
+            <xpath expr="//notebook/page[@name='general_information']" position="after">
+                <page string="Detalles CANTV" name="cantv_details" attrs="{'invisible': [('is_cantv_asset', '=', False)]}">
+                    <group>
+                        <field name="cantv_serial_number"/>
+                        <field name="cantv_acquisition_date"/>                        
+                        <field name="cantv_estimated_lifespan"/>
+                        <field name="cantv_asset_state"/>
+                        <field name="cantv_responsible_person"/>
+                        <field name="cantv_notes"/>
+
+                        <field name="cantv_brand"/>
+                        <field name="cantv_model"/>
+                        <field name="cantv_material_sir_code"/>
+                        <field name="cantv_sap_code"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,24 @@
+// cantv_theme/static/src/scss/custom_styles.scss
+
+// Cambia el color de la barra superior (navbar)
+.o_main_navbar {
+    background-color: #5c3bf0 !important; // Usar el color de CANTV
+}
+
+// Cambia el color de los botones primarios
+//.btn-primary {
+//    background-color: #8ea2fc !important;
+//    border-color: #000874 !important;
+//}
+
+// Cambia el color de los enlaces y texto primario (si es necesario)
+//a, .text-primary {
+//    color: #8eec86 !important;
+//}
+
+// Ajusta otros elementos si es necesario (puedes usar el inspector del navegador para identificar clases)
+// Por ejemplo, para los iconos de menú lateral si cambian con el color primario
+//.o_sidebar_menu .active .o_menu_icon,
+//.o_sidebar_menu .active .o_menu_text {
+//    color: #ee2222 !important;
+//}

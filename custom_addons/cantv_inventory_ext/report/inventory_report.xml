@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_cantv_inventory" model="ir.actions.report">
+        <field name="name">Inventario CANTV</field>
+        <field name="model">product.template</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">cantv_inventory_ext.report_cantv_inventory_template</field>
+        <field name="report_file">cantv_inventory_ext.report_cantv_inventory_template</field>
+        <field name="print_report_name">'Inventario - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="product.model_product_template"/>
+        <field name="binding_type">report</field>
+    </record>
+
+        <record id="action_report_cantv_incoming" model="ir.actions.report">
+        <field name="name">Control de Entradas CANTV</field>
+        <field name="model">stock.picking</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">cantv_inventory_ext.report_cantv_incoming_template</field>
+        <field name="report_file">cantv_inventory_ext.report_cantv_incoming_template</field>
+        <field name="print_report_name">'Control de Entradas - %s' % (object.name) if object.picking_type_code in ('incoming', 'internal') else False</field>
+        <field name="binding_model_id" ref="stock.model_stock_picking"/>
+        <field name="binding_type">report</field>
+        <field name="groups_id" eval="[(4, ref('stock.group_stock_user'))]"/>
+    </record>
+
+    <record id="action_report_cantv_outgoing" model="ir.actions.report">
+        <field name="name">Control de Salidas CANTV</field>
+        <field name="model">stock.picking</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">cantv_inventory_ext.report_cantv_outgoing_template</field>
+        <field name="report_file">cantv_inventory_ext.report_cantv_outgoing_template</field>
+        <field name="print_report_name">'Control de Salidas - %s' % (object.name) if object.picking_type_code in ('outgoing', 'internal') else False</field>
+        <field name="binding_model_id" ref="stock.model_stock_picking"/>
+        <field name="binding_type">report</field>
+        <field name="groups_id" eval="[(4, ref('stock.group_stock_user'))]"/>
+    </record>
+
+</odoo>

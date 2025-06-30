@@ -1,0 +1,8 @@
+<odoo>
+    <template id="assets_backend" name="CANTV Backend Assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" type="text/scss" href="/cantv_theme/static/src/scss/custom_variables.scss"/>
+            <link rel="stylesheet" type="text/scss" href="/cantv_theme/static/src/scss/custom_styles.scss"/>
+        </xpath>
+    </template>
+</odoo>

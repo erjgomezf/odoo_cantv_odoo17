@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="cantv_view_picking_form" model="ir.ui.view">
+        <field name="name">stock.picking.form.cantv</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='origin']" position="after">
+                <field name="cantv_solicited_by"/>
+                <field name="cantv_retrieved_by"/>
+                <field name="cantv_unit"/>
+                <field name="cantv_project"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_cantv_inventory_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2 class="text-center">CONTROL DE INVENTARIO DE MATERIALES Y EQUIPOS DE LA GERENCIA XXXXXX</h2>
+                        <br/>
+                        <table class="table table-bordered o_main_table">
+                            <thead>
+                                <tr>
+                                    <th>Descripción del Material</th>
+                                    <th>UM</th>
+                                    <th>Marca</th>
+                                    <th>Modelo</th>
+                                    <th>Serial</th>
+                                    <th>Código Material SIR</th>
+                                    <th>Cod. Inventario / SAP</th>
+                                    <th>Ubicación</th>
+                                    <th class="text-right">Disponible</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="env['product.template'].search([('is_cantv_asset', '=', True)])" t-as="product">
+                                    <t t-foreach="env['stock.quant'].search([('product_tmpl_id', '=', product.id), ('location_id.usage', '=', 'internal')])" t-as="quant">
+                                        <tr>
+                                            <td><span t-field="product.name"/></td>
+                                            <td><span t-field="product.uom_id.name"/></td>
+                                            <td><span t-field="product.cantv_brand"/></td>
+                                            <td><span t-field="product.cantv_model"/></td>
+                                            <td><span t-field="product.cantv_serial_number"/></td>
+                                            <td><span t-field="product.cantv_material_sir_code"/></td>
+                                            <td><span t-field="product.cantv_sap_code"/></td>
+                                            <td><span t-field="quant.location_id.display_name"/></td>
+                                            <td class="text-right"><span t-field="quant.quantity"/></td>
+                                        </tr>
+                                    </t>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>
