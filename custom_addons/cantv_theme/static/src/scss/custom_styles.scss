@@ -2,8 +2,9 @@
 
 // Cambia el color de la barra superior (navbar)
 .o_main_navbar {
-    background-color: #5c3bf0 !important; // Usar el color de CANTV
+    background-color: $o-cantv-primary !important;
 }
+
 
 // Cambia el color de los botones primarios
 //.btn-primary {
