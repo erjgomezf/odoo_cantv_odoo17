@@ -6,7 +6,7 @@ class ProductTemplate(models.Model):
     _inherit = 'product.template' # Estamos extendiendo el modelo 'product.template' (plantilla de producto)
 
     # Campos para el inventario de fibra óptica y activos de red
-    is_cantv_asset = fields.Boolean(string="Es Activo CANTV", default=False, help="Indica si este producto es un activo físico rastreable por CANTV.")
+    is_cantv_asset = fields.Boolean(string="Es Activo CANTV", default=True, help="Indica si este producto es un activo físico rastreable por CANTV.")
     cantv_serial_number = fields.Char(string="Número de Serie CANTV", copy=False, help="Inventario corporativo de CANTV para rastrear el activo.") 
     cantv_acquisition_date = fields.Date(string="Fecha de Adquisición")
     cantv_estimated_lifespan = fields.Integer(string="Vida Útil Estimada (años)")

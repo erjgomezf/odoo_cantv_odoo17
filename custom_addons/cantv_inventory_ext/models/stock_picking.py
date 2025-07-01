@@ -9,5 +9,5 @@ class StockPicking(models.Model):
     cantv_solicited_by = fields.Char(string='Solicitado Por')
     cantv_retrieved_by = fields.Char(string='Retirado Por')
     cantv_unit = fields.Char(string='Unidad')
-    cantv_project = fields.Char(string='Proyecto Ampliacion') # Cambié el nombre para que coincida con tu plantilla
+    cantv_project = fields.Char(string='Proyecto Ampliacion') # Proyecto de ampliación o mantenimiento
     

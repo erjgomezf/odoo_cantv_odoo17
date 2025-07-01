@@ -5,7 +5,7 @@
             <t t-foreach="docs" t-as="o">
                 <t t-call="web.external_layout">
                     <div class="page">
-                        <h2 class="text-center">CONTROL DE LAS ENTRADAS DE MATERIALES Y EQUIPOS DE LA GERENCIA XXXXXX</h2>
+                        <h2 class="text-center">CONTROL DE LAS ENTRADAS DE MATERIALES Y EQUIPOS DE LA GERENCIA PROGRAMA RED TRONCAL Y TRANSPORTE</h2>
                         <br/>
                         <table class="table table-bordered o_main_table">
                             <thead>
