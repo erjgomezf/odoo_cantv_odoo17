@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <record id="product_template_form_view_cantv_ext" model="ir.ui.view">
         <field name="name">product.template.form.view.cantv.ext</field>
@@ -12,7 +11,7 @@
             </xpath>
 
             <xpath expr="//notebook/page[@name='general_information']" position="after">
-                <page string="Detalles CANTV" name="cantv_details" attrs="{'invisible': [('is_cantv_asset', '=', False)]}">
+                <page string="Detalles CANTV" name="cantv_details">
                     <group>
                         <field name="cantv_serial_number"/>
                         <field name="cantv_acquisition_date"/>                        
@@ -20,7 +19,6 @@
                         <field name="cantv_asset_state"/>
                         <field name="cantv_responsible_person"/>
                         <field name="cantv_notes"/>
-
                         <field name="cantv_brand"/>
                         <field name="cantv_model"/>
                         <field name="cantv_material_sir_code"/>
