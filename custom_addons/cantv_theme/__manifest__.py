@@ -6,17 +6,19 @@
     'summary': 'Personalización de branding y colores para Odoo 17 Community.',
     'description': """
         Este módulo aplica un estilo visual adaptado al branding CANTV.
-        - Cambia el color principal del menú.
-        - Actualiza variables SCSS para el backend.
-        - Permite extender plantillas visuales si es necesario.
+        - Cambia el color del menú superior.
+        - Ajusta variables SCSS para el backend.
     """,
     'author': 'Ernesto Gomez',
     'website': 'https://www.cantv.com.ve',
     'license': 'LGPL-3',
     'depends': ['web'],
-    'data': [
-        'views/assets.xml',
-    ],
+    'assets': {
+        'web.assets_backend': [
+            'cantv_theme/static/src/scss/custom_variables.scss',
+            'cantv_theme/static/src/scss/custom_styles.scss',
+        ],
+    },
     'installable': True,
     'application': False,
 }
