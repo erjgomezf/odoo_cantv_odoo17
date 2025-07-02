@@ -78,9 +78,7 @@
                                             <span t-field="move.product_id.display_name"/>
                                         </td>
                                         <td><span t-field="move.product_uom.name"/></td>
-                                        <td>
-                                            <span t-field="move.product_uom_qty"/>
-                                        </td>
+                                        <td><span t-esc="sum(line.quantity for line in move.move_line_ids)"/></td>
                                         <td><span t-field="o.date_done" t-options='{"widget": "date"}'/></td>
                                         <td><span t-field="o.name"/></td>
                                         <td><span t-field="o.location_id.display_name"/></td>
