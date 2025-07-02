@@ -5,6 +5,33 @@
     background-color: $o-cantv-primary !important;
 }
 
+// Cambia el color de los botones primarios
+.btn-primary {
+    background-color: $o-theme-color-primary !important;
+    border-color: $o-theme-border-color !important; // Cambia el color del borde del botón primario
+    color: #fff !important; // Asegura que el texto del botón sea legible
+} 
+
+// Efecto hover para los botones primarios
+.btn-primary:hover {
+    background-color: darken($o-theme-color-primary, 10%) !important; // Oscurece el color al pasar el ratón
+    border-color: darken($o-theme-border-color, 10%) !important; // Oscurece el borde al pasar el ratón
+}
+
+// Estilos para los elementos del menú en la barra de navegación
+.o_main_navbar .o_menu_sections .o_nav_entry,
+.o_main_navbar .o_menu_sections .dropdown-toggle {
+    background-color: $o-cantv-primary !important;
+    color: #fff !important; // Asegura que el texto sea legible
+    transition: background-color 0.2s ease-in-out; // Añade una transición suave
+}
+
+// Efecto hover para los elementos del menú
+.o_main_navbar .o_menu_sections .o_nav_entry:hover,
+.o_main_navbar .o_menu_sections .dropdown-toggle:hover,
+.o_main_navbar .o_menu_sections .show > .dropdown-toggle { // Aplica también cuando un menú desplegable está abierto
+    background-color: darken($o-cantv-primary, 8%) !important; // Oscurece el color al pasar el ratón
+}
 
 // Cambia el color de los botones primarios
 //.btn-primary {
