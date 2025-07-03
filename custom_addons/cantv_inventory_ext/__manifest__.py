@@ -6,7 +6,7 @@
     'author': "Ernesto Gomez", # Nombre del desarrollador
     'website': "http://www.cantv.com.ve",
     'license': 'LGPL-3',
-    'depends': ['stock', 'product'], # Esto es crucial
+    'depends': ['stock','base','product'], # Esto es crucial
     'data': [
         'security/ir.model.access.csv',
         'views/product_template_views.xml', # Archivo XML que define las vistas y campos adicionales
@@ -15,6 +15,7 @@
         'report/incoming_report_templates.xml', # Plantillas del reporte de entradas
         'views/stock_picking_views.xml', # Vistas para stock.picking
         'report/outgoing_report_templates.xml', # Plantillas del reporte de salidas
+        'views/inventory_report_wizard_view.xml', # Vista del asistente para reporte de inventario
     ],
     'installable': True,
     'application': False,
