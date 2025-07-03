@@ -2,7 +2,7 @@
 <odoo>
     <record id="action_report_cantv_inventory" model="ir.actions.report">
         <field name="name">Inventario CANTV</field>
-        <field name="model">product.template</field>
+        <field name="model">cantv.inventory.report.wizard</field>
         <field name="report_type">qweb-pdf</field>
         <field name="report_name">cantv_inventory_ext.report_cantv_inventory_template</field>
         <field name="report_file">cantv_inventory_ext.report_cantv_inventory_template</field>
