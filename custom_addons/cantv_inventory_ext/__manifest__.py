@@ -1,3 +1,4 @@
+# cantv_inventory_ext/__manifest__.py
 {
     'name': "CANTV - Extensión de Inventario",
     'summary': "Campos y funcionalidades adicionales para la gestión de inventario de fibra óptica en CANTV.",
