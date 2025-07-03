@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-
     <record id="action_report_cantv_inventory" model="ir.actions.report">
         <field name="name">Inventario CANTV</field>
         <field name="model">product.template</field>
@@ -8,9 +7,9 @@
         <field name="report_name">cantv_inventory_ext.report_cantv_inventory_template</field>
         <field name="report_file">cantv_inventory_ext.report_cantv_inventory_template</field>
         <field name="print_report_name">'Inventario - %s' % object.name</field>
-    </record>
+        </record>
 
-        <record id="action_report_cantv_incoming" model="ir.actions.report">
+    <record id="action_report_cantv_incoming" model="ir.actions.report">
         <field name="name">Control de Entradas CANTV</field>
         <field name="model">stock.picking</field>
         <field name="report_type">qweb-pdf</field>

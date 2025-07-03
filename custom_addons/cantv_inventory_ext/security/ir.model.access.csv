@@ -1,2 +1,3 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_product_template_cantv,Product Template CANTV Access,model_product_template,base.group_user,1,1,1,1
+access_product_template_cantv,Product Template CANTV Access,product.model_product_template,base.group_user,1,1,1,1
+access_cantv_inventory_report_wizard,Access cantv_inventory_report_wizard,cantv_inventory_ext.model_cantv_inventory_report_wizard,base.group_user,1,1,1,1
