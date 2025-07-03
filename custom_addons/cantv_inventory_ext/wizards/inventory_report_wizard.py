@@ -17,7 +17,6 @@ class CantvInventoryReportWizard(models.TransientModel):
 
     @api.model
     def _get_default_warehouse(self):
-        # Establece el almacén por defecto al primero encontrado o al almacén de la compañía actual
         user_company = self.env.company
         return self.env['stock.warehouse'].search([('company_id', '=', user_company.id)], limit=1)
 
@@ -27,21 +26,16 @@ class CantvInventoryReportWizard(models.TransientModel):
         """
         self.ensure_one()
 
-        # Obtenemos la ubicación principal del almacén seleccionado.
-        # Los stock.quant (registros de inventario) están asociados a ubicaciones (stock.location),
-        # no directamente a almacenes (stock.warehouse).
-        # 'lot_stock_id' es la ubicación de stock por defecto de un almacén.
         location = self.warehouse_id.lot_stock_id
 
-        # Preparamos los datos de contexto que se pasarán a la plantilla QWeb del reporte
-        data = {
-            'context': {
-                'location_id': location.id,
-                'location_name': location.display_name, # Nombre completo de la ubicación (ej. 'YourCompany/Stock')
-            }
+        # Simplemente pasa el diccionario de contexto directamente al parámetro 'data' del report_action.
+        # Odoo se encargará de ponerlo en el 'context' adecuado para el reporte QWeb.
+        report_data = {
+            'location_id': location.id,
+            'location_name': location.display_name,
         }
 
-        # Llamamos a la acción del reporte PDF que ya tienes definida.
-        # 'self' se pasa como un pseudo-registro para que Odoo sepa de qué modelo se llama,
-        # aunque los datos relevantes van en 'data'.
-        return self.env.ref('cantv_inventory_ext.action_report_cantv_inventory').report_action(self, data=data)
+        # Llamamos a la acción del reporte PDF.
+        # 'self' es el registro actual del asistente.
+        # 'data=report_data' es donde se pasan los valores que quieres que estén disponibles en el contexto del reporte QWeb.
+        return self.env.ref('cantv_inventory_ext.action_report_cantv_inventory').report_action(self, data=report_data)
