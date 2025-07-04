@@ -22,20 +22,15 @@ class CantvInventoryReportWizard(models.TransientModel):
 
     def print_report(self):
         """
-        Método para imprimir el reporte de inventario con el almacén seleccionado.
+        Método para imprimir el reporte de inventario con el almacén seleccionado,
+        usando un controlador HTTP para generar el PDF con Reportlab.
         """
         self.ensure_one()
-
         location = self.warehouse_id.lot_stock_id
 
-        # Simplemente pasa el diccionario de contexto directamente al parámetro 'data' del report_action.
-        # Odoo se encargará de ponerlo en el 'context' adecuado para el reporte QWeb.
-        report_data = {
-            'location_id': location.id,
-            'location_name': location.display_name,
+        # Redirigir al navegador a la URL de nuestro controlador
+        return {
+            'type': 'ir.actions.act_url',
+            'url': f'/cantv_inventory_ext/report/pdf?location_id={location.id}',
+            'target': 'new', # Abre el PDF en una nueva pestaña
         }
-
-        # Llamamos a la acción del reporte PDF.
-        # 'self' es el registro actual del asistente.
-        # 'data=report_data' es donde se pasan los valores que quieres que estén disponibles en el contexto del reporte QWeb.
-        return self.env.ref('cantv_inventory_ext.action_report_cantv_inventory').report_action(self, data=report_data)

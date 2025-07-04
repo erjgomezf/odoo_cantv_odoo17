@@ -2,12 +2,12 @@
 <odoo>
     <record id="action_report_cantv_inventory" model="ir.actions.report">
         <field name="name">Inventario CANTV</field>
-        <field name="model">cantv.inventory.report.wizard</field>
+        <field name="model">stock.quant</field>        <!-- este es tu wizard -->
         <field name="report_type">qweb-pdf</field>
         <field name="report_name">cantv_inventory_ext.report_cantv_inventory_template</field>
         <field name="report_file">cantv_inventory_ext.report_cantv_inventory_template</field>
-        <field name="print_report_name">'Inventario - %s' % object.name</field>
-        </record>
+        <field name="print_report_name">'Inventario - %s' % object.product_id.display_name</field>
+    </record>
 
     <record id="action_report_cantv_incoming" model="ir.actions.report">
         <field name="name">Control de Entradas CANTV</field>
