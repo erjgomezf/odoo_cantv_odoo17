@@ -18,6 +18,7 @@
         </field>
     </record>
 
+    <!-- Formulario para imprimir el PDF por almacenes-->
     <record id="action_cantv_inventory_report_wizard" model="ir.actions.act_window">
         <field name="name">Reporte de Inventario por Almacén</field>
         <field name="res_model">cantv.inventory.report.wizard</field>
