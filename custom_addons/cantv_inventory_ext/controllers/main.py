@@ -22,30 +22,29 @@ def _header_footer(canvas, doc, location_name):
     page_width, page_height = landscape(A4) 
 
     # --- Encabezado ---
-    # Logo - Asegúrate que esta ruta sea correcta para tu Odoo
-    logo_path = 'http://localhost:8069/cantv_inventory_ext/static/src/img/cantv_logo.png' 
+    # Logo - Construimos la URL dinámicamente para que funcione en cualquier servidor
+    base_url = request.httprequest.url_root
+    logo_path = f'{base_url}cantv_inventory_ext/static/src/img/cantv_logo.png'
     try:
         logo = ImageReader(logo_path)
-        # Posición del logo (ajustada para landscape y topMargin, y nuevo leftMargin)
-        canvas.drawImage(logo, doc.leftMargin, page_height - doc.topMargin + 10, width=80, height=30, preserveAspectRatio=True)
+        # Posición del logo: lo más en el extremo superior izquierdo
+        # Ajustamos el +Y para que no se pegue al borde superior absoluto pero esté muy cerca
+        canvas.drawImage(logo, doc.leftMargin, page_height - doc.topMargin + 20, width=80, height=30, preserveAspectRatio=True)
+        # Nota: El fondo blanco del logo debe ser parte del archivo de imagen (cantv_logo.png). 
+        # Reportlab no puede cambiar el fondo de una imagen.
     except Exception:
         canvas.setFont('Helvetica-Bold', 8)
         canvas.drawString(doc.leftMargin, page_height - doc.topMargin + 20, "LOGO CANTV (no encontrado)")
 
-    # Información de la compañía (izquierda, ajustado a nuevo leftMargin)
-    canvas.setFont('Helvetica-Bold', 10)
-    canvas.drawString(doc.leftMargin + 90, page_height - doc.topMargin + 25, "Compañía Anónima Nacional Teléfonos de Venezuela")
-    canvas.setFont('Helvetica', 8)
-    canvas.drawString(doc.leftMargin + 90, page_height - doc.topMargin + 15, "CANTV")
-    canvas.drawString(doc.leftMargin + 90, page_height - doc.topMargin + 5, "Caracas, Venezuela")
+    # Eliminadas: "Compañía Anónima Nacional Teléfonos de Venezuela", "CANTV", "Caracas, Venezuela"
+    # Eliminadas: "Gerencia General Proyectos Mayores", "Gerencia Programa Redes de Acceso"
 
-    # Títulos del reporte (derecha, ajustado a nuevo rightMargin)
+    # Títulos del reporte - Centrados horizontalmente
+    # Ajustamos las coordenadas Y para que estén alineados y bien espaciados
     canvas.setFont('Helvetica-Bold', 12)
-    canvas.drawRightString(page_width - doc.rightMargin, page_height - doc.topMargin + 40, f"INVENTARIO DE MATERIALES/EQUIPOS DEL DEPÓSITO: {location_name}")
+    canvas.drawCentredString(page_width / 2, page_height - doc.topMargin + 25, f"INVENTARIO DE MATERIALES/EQUIPOS DEL DEPÓSITO: {location_name}")
     canvas.setFont('Helvetica', 10)
-    canvas.drawRightString(page_width - doc.rightMargin, page_height - doc.topMargin + 25, "CONTROL DE INVENTARIO DE MATERIALES Y EQUIPOS DE LA GERENCIA RED TRONCAL Y TRANSPORTE")
-    canvas.drawRightString(page_width - doc.rightMargin, page_height - doc.topMargin + 10, "Gerencia General Proyectos Mayores")
-    canvas.drawRightString(page_width - doc.rightMargin, page_height - doc.topMargin - 5, "Gerencia Programa Redes de Acceso")
+    canvas.drawCentredString(page_width / 2, page_height - doc.topMargin + 10, "CONTROL DE INVENTARIO DE MATERIALES Y EQUIPOS DE LA GERENCIA RED TRONCAL Y TRANSPORTE")
 
     # Línea Separadora
     canvas.line(doc.leftMargin, page_height - doc.topMargin - 15, page_width - doc.rightMargin, page_height - doc.topMargin - 15)
@@ -53,7 +52,6 @@ def _header_footer(canvas, doc, location_name):
 
     # --- Pie de página ---
     canvas.setFont('Helvetica', 8)
-    # Centrado en el nuevo ancho de página
     canvas.drawCentredString(page_width / 2, doc.bottomMargin / 2, f"Página: {doc.page}") 
     canvas.restoreState()
 
@@ -74,20 +72,18 @@ class CantvInventoryReportController(http.Controller):
 
         buffer = io.BytesIO()
         
-        # Ajusta los márgenes laterales a 1 cm (aproximadamente 0.39 pulgadas)
+        # Ajusta los márgenes laterales a 0.25*inch (~0.635 cm)
         doc = SimpleDocTemplate(buffer,
                                 pagesize=landscape(A4), 
-                                rightMargin=0.39*inch,  # Margen derecho a 1 cm (0.39 pulgadas)
-                                leftMargin=0.39*inch,   # Margen izquierdo a 1 cm (0.39 pulgadas)
+                                rightMargin=0.25*inch,  
+                                leftMargin=0.25*inch,   
                                 topMargin=1.5*inch,    
                                 bottomMargin=0.75*inch) 
         
         styles = getSampleStyleSheet()
 
-        # Ajustamos el tamaño de fuente para mejorar la legibilidad, si es posible.
-        # Volvemos a 7 para el contenido y 8 para los encabezados, que es más estándar.
-        styles.add(ParagraphStyle(name='TableContent', parent=styles['Normal'], fontSize=7, leading=9))
-        styles.add(ParagraphStyle(name='TableHeader', parent=styles['Normal'], fontSize=8, fontName='Helvetica-Bold', alignment=1, leading=10))
+        styles.add(ParagraphStyle(name='TableContent', parent=styles['Normal'], fontSize=6, leading=9))
+        styles.add(ParagraphStyle(name='TableHeader', parent=styles['Normal'], fontSize=7, fontName='Helvetica-Bold', alignment=1, leading=10))
         
         elements = []
 
@@ -106,11 +102,8 @@ class CantvInventoryReportController(http.Controller):
             Paragraph("CODIGO DE MATERIAL SIR", styles['TableHeader']),
             Paragraph("COD INVENTARIO SAP", styles['TableHeader']),
             Paragraph("OBSERVACION", styles['TableHeader']),
-            Paragraph("UBICACIÓN", styles['TableHeader']),
-            Paragraph("INICIAL", styles['TableHeader']),
-            Paragraph("ENTREGADO", styles['TableHeader']),
-            Paragraph("DISPONIBLE", styles['TableHeader']),
-            Paragraph("ALMACEN TRANSITORIO", styles['TableHeader'])
+            Paragraph("UBICACIÓN ACTUAL", styles['TableHeader']),
+            Paragraph("DISPONIBLE", styles['TableHeader'])
         ]
         table_data = [table_headers]
 
@@ -124,31 +117,24 @@ class CantvInventoryReportController(http.Controller):
                 Paragraph(quant.lot_id.name if quant.lot_id else product_tmpl.cantv_serial_number or '', styles['TableContent']),
                 Paragraph(product_tmpl.cantv_material_sir_code or '', styles['TableContent']),
                 Paragraph(product_tmpl.cantv_sap_code or '', styles['TableContent']),
-                Paragraph('', styles['TableContent']), # Placeholder para OBSERVACION
-                Paragraph(quant.location_id.display_name or '', styles['TableContent']),
-                Paragraph('', styles['TableContent']), # Placeholder para INICIAL
-                Paragraph('', styles['TableContent']), # Placeholder para ENTREGADO
-                Paragraph(str(quant.quantity), styles['TableContent']),
-                Paragraph('', styles['TableContent']) # Placeholder para ALMACEN TRANSITORIO
+                Paragraph(product_tmpl.cantv_notes or '', styles['TableContent']), 
+                Paragraph(quant.location_id.display_name or '', styles['TableContent']), 
+                Paragraph(str(quant.quantity), styles['TableContent']) 
             ])
 
         if table_data:
-            # Anchos de columna ajustados para A4 Landscape con 1cm de márgenes (ancho utilizable aprox. 10.79 pulgadas)
-            # Suma total de anchos: 1.8 + 0.4 + 0.7 + 0.7 + 0.9 + 0.8 + 0.8 + 1.0 + 1.0 + 0.6 + 0.6 + 0.5 + 0.9 = 10.7 pulgadas
+            # Anchos de columna ajustados para un ancho útil de aprox. 11.19 pulgadas
             col_widths = [
-                1.8*inch,  # DESCRIPCIÓN DEL MATERIAL
-                0.4*inch,  # UM
+                2.5*inch,  # DESCRIPCIÓN DEL MATERIAL
+                0.7*inch,  # UM
                 0.7*inch,  # MARCA
                 0.7*inch,  # MODELO
-                0.9*inch,  # SERIAL
+                1.3*inch,  # SERIAL
                 0.8*inch,  # CODIGO DE MATERIAL SIR
                 0.8*inch,  # COD INVENTARIO SAP
-                1.0*inch,  # OBSERVACION
-                1.0*inch,  # UBICACIÓN
-                0.6*inch,  # INICIAL
-                0.6*inch,  # ENTREGADO
-                0.5*inch,  # DISPONIBLE
-                0.9*inch   # ALMACEN TRANSITORIO
+                1.5*inch,  # OBSERVACION
+                1.5*inch,  # UBICACIÓN ACTUAL
+                0.7*inch   # DISPONIBLE
             ]
             
             table = Table(table_data, colWidths=col_widths)
@@ -162,7 +148,7 @@ class CantvInventoryReportController(http.Controller):
                 ('BACKGROUND', (0, 1), (-1, -1), colors.HexColor('#F5F5F5')),
                 ('GRID', (0, 0), (-1, -1), 1, colors.HexColor('#CCCCCC')),
                 ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
-                ('ALIGN', (11,0), (11,-1), 'RIGHT'), # Columna "DISPONIBLE" (índice 11) a la derecha
+                ('ALIGN', (9,0), (9,-1), 'RIGHT'), # Columna "DISPONIBLE" (índice 9) a la derecha
                 ('LEFTPADDING', (0,0), (-1,-1), 2),
                 ('RIGHTPADDING', (0,0), (-1,-1), 2),
                 ('TOPPADDING', (0,1), (-1,-1), 2),
