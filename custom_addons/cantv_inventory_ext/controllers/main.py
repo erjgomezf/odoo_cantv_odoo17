@@ -99,9 +99,9 @@ class CantvInventoryReportController(http.Controller):
             Paragraph("MARCA", styles['TableHeader']),
             Paragraph("MODELO", styles['TableHeader']),
             Paragraph("SERIAL", styles['TableHeader']),
-            Paragraph("CODIGO DE MATERIAL SIR", styles['TableHeader']),
+            Paragraph("CÓDIGO DE MATERIAL SIR", styles['TableHeader']),
             Paragraph("COD INVENTARIO SAP", styles['TableHeader']),
-            Paragraph("OBSERVACION", styles['TableHeader']),
+            Paragraph("OBSERVACIÓN", styles['TableHeader']),
             Paragraph("UBICACIÓN ACTUAL", styles['TableHeader']),
             Paragraph("DISPONIBLE", styles['TableHeader'])
         ]
